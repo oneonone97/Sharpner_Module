@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: azure;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #form-section {
+            width: 200px;
+            height: 200px;
+            background-color: goldenrod;
+            margin: 3rem;
+            padding: 3rem;
+
+
+        }
+
+        #inner-form {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+
+        }
+
+        input {
+            margin: 0.5rem;
+        }
+
+        label {
+            margin: 0.5rem;
+        }
+
+        #btn {
+            height: 21px;
+            width: 100px;
+            text-align: center;
+            margin-left: 50px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <section id="form-section">
+        <form id="inner-form" onsubmit="saveOnLocal(event)">
+            <div id="msg"></div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+            <label for="phone">Phone</label>
+            <input type="text" name="phone" id="phone">
+            <input type="submit" id="btn" value="Submit">
+
+        </form>
+        <ul id="users">
+            <li>User Details</li>
+        </ul>
+    </section>
+
+    <script>
+        function saveOnLocal(event) {
+            event.preventDefault();
+            const name = event.target.name.value;
+            const email = event.target.email.value;
+            const phone = event.target.phone.value;
+
+            const obj = {
+                name,
+                email,
+                phone
+            };
+
+            localStorage.clear();
+            localStorage.setItem(email, JSON.stringify(obj));
+            showOnDisplay(obj);
+
+            console.log(name);
+        }
+        function showOnDisplay(obj) {
+            const users = document.getElementById('users');
+            const li = document.createElement('li');
+            li.textContent = `${obj.name} ${obj.email} ${obj.phone}`;
+
+            const button = document.createElement('button');
+            // button.appendChild(document.createTextNode('delete'));
+            button.textContent = "Delete";
+            li.appendChild(button);
+            users.appendChild(li);
+
+            const editBtn = document.createElement('button');
+            // button.appendChild(document.createTextNode('delete'));
+            editBtn.textContent = "Edit";
+            li.appendChild(editBtn);
+            users.appendChild(li);
+
+            button.onclick = () => {
+                localStorage.removeItem(obj.email);
+                users.removeChild(li);
+            }
+
+            editBtn.onclick = () => {
+                localStorage.removeItem(obj.email);
+                users.removeChild(li);
+
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
