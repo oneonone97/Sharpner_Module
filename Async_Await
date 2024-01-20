@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aync Await</title>
+</head>
+<body>
+    <script>
+        async function updateLastUserActivityTime() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const lastActivityTime = new Date();
+      console.log('Last activity time updated:', lastActivityTime);
+      resolve(lastActivityTime);
+    }, 1000);
+  });
+}
+
+async function createPost(user, content) {
+  return new Promise((resolve) => {
+    // Simulating creating a post
+    const post = { user, content };
+    console.log('Post created:', post);
+    resolve(post);
+  });
+}
+
+async function deletePost(post) {
+  return new Promise((resolve) => {
+    // Simulating deleting a post
+    console.log('Post deleted:', post);
+    resolve(post);
+  });
+}
+
+async function getColdDrinks() {
+  return new Promise((resolve) => {
+    // Simulating getting cold drinks after getting butter
+    console.log('Got cold drinks.');
+    resolve('Cold drinks');
+  });
+}
+
+// Example usage with async/await
+async function main() {
+  try {
+    const user = 'Rohan';
+    const postContent = 'This is a sample post using Async Await.';
+
+    const createdPost = await createPost(user, postContent);
+    const lastActivityTime = await updateLastUserActivityTime();
+
+    console.log('User last activity time:', lastActivityTime);
+    console.log('All posts:', [createdPost]);
+
+    const posts = [createdPost];
+    const deletedPost = await deletePost(posts.pop());
+
+    console.log('Remaining posts:', [deletedPost]);
+
+    const coldDrinks = await getColdDrinks();
+    console.log('Got:', coldDrinks);
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+}
+
+// Call the main function
+main();
+
+    </script>
+</body>
+</html>
